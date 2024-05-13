@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Konversi Waktu</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 500px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            text-align: center;
+            margin-top: 0;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        label {
+            margin-bottom: 8px;
+        }
+        input[type="text"] {
+            padding: 8px;
+            margin-bottom: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #hasilKonversi {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #f0f0f0;
+            border-radius: 4px;
+            text-align: center;
+            display: none;
+        }
+        .error-message {
+            color: #ff0000;
+            margin-top: 8px;
+            text-align: center;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Konversi Waktu dari Format 24 Jam ke Format AM/PM</h2>
+        <form id="formKonversiWaktu">
+            <label for="waktu24Jam">Waktu (format 24 jam):</label>
+            <input type="text" id="waktu24Jam" name="waktu24Jam" placeholder="Contoh: 18:30">
+            <button type="button" onclick="konversiWaktu()">Konversi</button>
+        </form>
+        <div class="error-message" id="errorMessage"></div>
+        <div id="hasilKonversi"></div>
+    </div>
+
+    <script>
+        function konversiWaktu() {
+            var waktu24Jam = document.getElementById('waktu24Jam').value;
+            var hasilKonversi = document.getElementById('hasilKonversi');
+            var errorMessage = document.getElementById('errorMessage');
+
+            var waktuRegex = /^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/;
+            if (!waktuRegex.test(waktu24Jam)) {
+                errorMessage.innerText = 'Format waktu tidak valid. Masukkan waktu dalam format HH:MM (contoh: 18:30)';
+                errorMessage.style.display = 'block';
+                return;
+            }
+
+            var waktu12Jam = konversiWaktuKe12Jam(waktu24Jam);
+            hasilKonversi.innerText = 'Waktu dalam format 12 jam: ' + waktu12Jam;
+            hasilKonversi.style.display = 'block';
+            errorMessage.style.display = 'none';
+        }
+
+        function konversiWaktuKe12Jam(waktu24Jam) {
+            var jam = parseInt(waktu24Jam.substring(0, 2));
+            var menit = waktu24Jam.substring(3);
+
+            var ampm = jam >= 12 ? 'PM' : 'AM';
+            jam = jam % 12;
+            jam = jam ? jam : 12; 
+            var waktu12Jam = jam + ':' + menit + ' ' + ampm;
+
+            return waktu12Jam;
+        }
+    </script>
+</body>
+</html>

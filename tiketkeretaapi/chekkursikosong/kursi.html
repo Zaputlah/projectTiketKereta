@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cek Ketersediaan Kursi</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 500px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            text-align: center;
+            margin-top: 0;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        label {
+            margin-bottom: 8px;
+        }
+        input[type="number"] {
+            padding: 8px;
+            margin-bottom: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #hasilCek {
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 4px;
+            text-align: center;
+            display: none;
+        }
+        #hasilCek.success {
+            background-color: #d4edda;
+            border-color: #c3e6cb;
+            color: #155724;
+        }
+        #hasilCek.error {
+            background-color: #f8d7da;
+            border-color: #f5c6cb;
+            color: #721c24;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Cek Ketersediaan Kursi</h2>
+        <form id="formCekKetersediaan">
+            <label for="jumlahKursi">Jumlah Kursi yang Diminta:</label>
+            <input type="number" id="jumlahKursi" name="jumlahKursi" min="1">
+            <button type="button" onclick="cekKetersediaan()">Cek Ketersediaan</button>
+        </form>
+        <div id="hasilCek"></div>
+    </div>
+
+    <script>
+
+        // Fungsi untuk secara acak menentukan ketersediaan kursi
+function acakKetersediaanKursi() {
+    // Anggap terdapat 50 kursi yang tersedia
+    var kursiTersedia = 20;
+
+    var random = Math.random();
+
+    if (random > 0.5) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+        function cekKetersediaan() {
+    var jumlahKursiDiminta = parseInt(document.getElementById('jumlahKursi').value);
+
+    // Memanggil fungsi untuk secara acak menentukan ketersediaan kursi
+    var tersedia = acakKetersediaanKursi();
+
+    // Menampilkan pesan hasil cek ketersediaan kursi
+    var hasilCek = document.getElementById('hasilCek');
+    if (tersedia) {
+        hasilCek.innerText = 'Kursi tersedia untuk memesan.';
+        hasilCek.className = 'success';
+    } else {
+        hasilCek.innerText = 'Maaf, kursi tidak tersedia untuk memesan.';
+        hasilCek.className = 'error';
+    }
+    hasilCek.style.display = 'block';
+}
+
+
+        // Fungsi untuk memeriksa ketersediaan kursi
+        function cekKetersediaanKursi(jumlahKursiDiminta, kursiTersedia) {
+            // Jika jumlah kursi yang diminta lebih kecil atau sama dengan kursi yang tersedia, maka kursi tersedia
+            if (jumlahKursiDiminta <= kursiTersedia) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    </script>
+</body>
+</html>

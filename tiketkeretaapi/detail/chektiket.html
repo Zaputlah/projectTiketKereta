@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detail Pesanan Tiket</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 500px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            text-align: center;
+            margin-top: 0;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        label {
+            margin-bottom: 8px;
+        }
+        input[type="text"],
+        input[type="number"] {
+            padding: 8px;
+            margin-bottom: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #detailPesanan {
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 4px;
+            text-align: center;
+            display: none;
+        }
+        .error-message {
+            color: red;
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Detail Pesanan Tiket</h2>
+        <form id="formPesanan">
+            <label for="namaPenumpang">Nama Penumpang:</label>
+            <input type="text" id="namaPenumpang" name="namaPenumpang" placeholder="Masukkan nama penumpang">
+            <span id="namaError" class="error-message"></span>
+            <label for="jumlahTiket">Jumlah Tiket:</label>
+            <input type="number" id="jumlahTiket" name="jumlahTiket" min="1" placeholder="Masukkan jumlah tiket">
+            <span id="jumlahError" class="error-message"></span>
+            <button type="button" onclick="tampilkanDetailPesanan()">Tampilkan Detail Pesanan</button>
+        </form>
+        <div id="detailPesanan"></div>
+    </div>
+
+    <script>
+        function tampilkanDetailPesanan() {
+            var namaPenumpang = document.getElementById('namaPenumpang').value;
+            var jumlahTiket = parseInt(document.getElementById('jumlahTiket').value);
+
+            // Menghapus pesan error sebelumnya
+            document.getElementById('namaError').textContent = '';
+            document.getElementById('jumlahError').textContent = '';
+
+            // Validasi input
+            var isValid = true;
+            if (namaPenumpang.trim() === '') {
+                document.getElementById('namaError').textContent = 'Mohon diisi';
+                isValid = false;
+            }
+            if (isNaN(jumlahTiket) || jumlahTiket <= 0) {
+                document.getElementById('jumlahError').textContent = 'Mohon diisi dengan angka yang valid';
+                isValid = false;
+            }
+
+            // Jika input valid, tampilkan detail pesanan
+            if (isValid) {
+                var hargaPerTiket = 50000; // Anggap harga per tiket adalah Rp 50.000
+                var totalHarga = jumlahTiket * hargaPerTiket;
+
+                var detailPesanan = document.getElementById('detailPesanan');
+                detailPesanan.innerHTML = ''; // Mengosongkan detail pesanan sebelumnya
+
+                var h3 = document.createElement('h3');
+                h3.textContent = 'Detail Pesanan:';
+                detailPesanan.appendChild(h3);
+
+                var pNama = document.createElement('p');
+                pNama.textContent = 'Nama Penumpang: ' + namaPenumpang;
+                detailPesanan.appendChild(pNama);
+
+                var pJumlahTiket = document.createElement('p');
+                pJumlahTiket.textContent = 'Jumlah Tiket: ' + jumlahTiket;
+                detailPesanan.appendChild(pJumlahTiket);
+
+                var pTotalHarga = document.createElement('p');
+                pTotalHarga.textContent = 'Total Harga: Rp ' + totalHarga;
+                detailPesanan.appendChild(pTotalHarga);
+
+                detailPesanan.style.display = 'block';
+            }
+        }
+    </script>
+</body>
+</html>
